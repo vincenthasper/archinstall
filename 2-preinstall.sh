@@ -21,17 +21,17 @@ sgdisk -n 5::-0 -t 5:8300 -c 5:'HOME' "$DISK"
 
 partprobe "$DISK"
 
-mkfs.vfat -F 32 -n 'EFIBOOT' "${DISK}1"
-mkfs.ext4 -F -L 'BOOT' "${DISK}2"
-mkswap -L 'SWAP' "${DISK}3"
-mkfs.ext4 -F -L 'ROOT' "${DISK}4"
-mkfs.ext4 -F -L 'HOME' "${DISK}5"
+mkfs.vfat -F 32 -n 'EFIBOOT' "${DISK}p1"
+mkfs.ext4 -F -L 'BOOT' "${DISK}p2"
+mkswap -L 'SWAP' "${DISK}p3"
+mkfs.ext4 -F -L 'ROOT' "${DISK}p4"
+mkfs.ext4 -F -L 'HOME' "${DISK}p5"
 
-mount "${DISK}4" /mnt
-mount --mkdir "${DISK}2" /mnt/boot
-mount --mkdir "${DISK}1" /mnt/boot/efi
-mount --mkdir "${DISK}5" /mnt/home
-swapon "${DISK}3"
+mount "${DISK}p4" /mnt
+mount --mkdir "${DISK}p2" /mnt/boot
+mount --mkdir "${DISK}p1" /mnt/boot/efi
+mount --mkdir "${DISK}p5" /mnt/home
+swapon "${DISK}p3"
 
 pacman -S reflector --noconfirm --needed
 country="$(curl -s ifconfig.co/country)"
